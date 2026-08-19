@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rana & Avni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #241A22;
+    --ink-2: #362530;
+    --paper: #F4E7D3;
+    --paper-2: #EDDBBF;
+    --coral: #E1594B;
+    --gold: #C4922F;
+    --sage: #6E7E5D;
+    --ink-text: #F4E7D3;
+    --ink-text-soft: #C9B8AE;
+    --paper-text: #2A1E27;
+    --paper-text-soft: #5B4A50;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--paper-text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,h2,h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.05;
+  }
+
+  .eyebrow{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    opacity: 0.7;
+  }
+
+  a{ color: inherit; }
+  :focus-visible{ outline: 2px solid var(--coral); outline-offset: 3px; }
+
+  section{ padding: clamp(4rem, 9vw, 7rem) clamp(1.5rem, 6vw, 4rem); }
+  .wrap{ max-width: 1080px; margin: 0 auto; }
+
+  /* ---------- signature duo-type effect ---------- */
+  .duo{ position: relative; display: inline-block; }
+  .duo::after{
+    content: attr(data-text);
+    position: absolute;
+    left: 0.06em; top: 0.05em;
+    color: var(--gold);
+    z-index: -1;
+    opacity: 0.85;
+    transition: all 0.6s cubic-bezier(.2,.8,.2,1);
+  }
+  .duo:hover::after, .duo.settle::after{ left: 0.02em; top: 0.02em; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    color: var(--ink-text);
+  }
+  .hero-bg{
+    position: absolute; inset: 0;
+    background-image: url('images/polaroids.jpeg');
+    background-size: cover;
+    background-position: center 30%;
+  }
+  .hero-bg::after{
+    content:"";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(36,26,34,0.55) 0%, rgba(36,26,34,0.65) 45%, rgba(36,26,34,0.94) 100%);
+  }
+  .hero-inner{ position: relative; z-index: 1; padding: 0 clamp(1.5rem, 6vw, 4rem) 4rem; }
+
+  .hero-date{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-text-soft);
+    margin-bottom: 1.6rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .hero-date .dot{ width: 6px; height: 6px; border-radius: 50%; background: var(--coral); display:inline-block; }
+
+  .hero h1{
+    font-size: clamp(3.2rem, 11vw, 7rem);
+    color: var(--coral);
+    letter-spacing: -0.01em;
+  }
+
+  .hero p.sub{
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+    max-width: 36ch;
+    margin-top: 1.4rem;
+    color: var(--ink-text-soft);
+  }
+
+  .counter-pill{
+    margin-top: 2rem;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-text-soft);
+    border: 1px solid rgba(244,231,211,0.25);
+    padding: 0.7rem 1.1rem;
+    border-radius: 2px;
+  }
+  .counter-pill strong{
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  .section-head{ max-width: 46ch; margin-bottom: 3.2rem; }
+  .section-head h2{ font-size: clamp(1.9rem, 4vw, 2.7rem); color: var(--paper-text); margin-top: 0.5rem; }
+  .section-head p{ color: var(--paper-text-soft); margin-top: 0.9rem; }
+
+  /* ---------- A FEW WORDS ONLY WE'D KNOW ---------- */
+  .pair-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .pair-card{ background: var(--paper); padding: 2.4rem 2rem; }
+  .pair-card .mark{ font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; color: var(--sage); letter-spacing: 0.1em; }
+  .pair-card h3{ font-size: 1.5rem; color: var(--ink); margin: 0.7rem 0 0.8rem; }
+  .pair-card p{ color: var(--paper-text-soft); font-size: 0.94rem; }
+
+  @media (max-width: 760px){ .pair-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- GALLERY ---------- */
+  .gallery{
+    background: var(--ink);
+    color: var(--ink-text);
+  }
+  .gallery .section-head h2{ color: var(--coral); }
+  .gallery .section-head p{ color: var(--ink-text-soft); }
+
+  .snap-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.6rem;
+  }
+  .snap{
+    background: #fff;
+    padding: 10px 10px 32px;
+    border-radius: 2px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  }
+  .snap img{ width: 100%; display:block; aspect-ratio: 4/5; object-fit: cover; }
+  .snap:nth-child(1){ transform: rotate(-3deg); }
+  .snap:nth-child(2){ transform: rotate(2deg); margin-top: 1.5rem; }
+  .snap:nth-child(3){ transform: rotate(-1.5deg); }
+  .snap:nth-child(4){ transform: rotate(3deg); margin-top: 1.5rem; grid-column: span 1; }
+
+  @media (max-width: 900px){
+    .snap-grid{ grid-template-columns: repeat(2, 1fr); }
+    .snap{ margin-top: 0 !important; }
+  }
+
+  /* ---------- LETTER ---------- */
+  .letter-wrap{ max-width: 640px; margin: 0 auto; }
+  .letter{
+    background: var(--paper-2);
+    border: 1px solid rgba(42,30,39,0.12);
+    padding: clamp(2rem, 5vw, 3.5rem);
+    border-radius: 2px;
+  }
+  .letter .to{
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--coral);
+    margin-bottom: 1.4rem;
+  }
+  .letter p{
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--paper-text);
+  }
+  .letter p + p{ margin-top: 1.1rem; }
+  .letter .sign{
+    margin-top: 2rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--paper-text-soft);
+  }
+  .letter .sign strong{ color: var(--ink); }
+
+  /* ---------- ASK ---------- */
+  .ask{ background: var(--ink); color: var(--ink-text); }
+  .ask .section-head h2{ color: var(--gold); }
+  .ask .section-head p{ color: var(--ink-text-soft); }
+
+  .bubbles{ display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-bottom: 2.2rem; }
+  .bubble{
+    border: 1px solid var(--ink-2);
+    background: var(--ink-2);
+    padding: 2.4rem 2rem;
+    border-radius: 4px;
+    min-height: 190px;
+    display:flex; align-items:center;
+  }
+  .bubble:nth-child(2){ border-color: rgba(225,89,75,0.35); }
+  .bubble p{ font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 400; line-height: 1.4; }
+  .bubble .who{
+    display:block; font-family:'Space Grotesk', sans-serif;
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.9rem;
+  }
+
+  @media (max-width: 680px){ .bubbles{ grid-template-columns: 1fr; } }
+
+  button.generate{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--coral); color: var(--ink);
+    border: none; padding: 0.95rem 1.8rem; border-radius: 2px;
+    cursor: pointer; font-weight: 500;
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+  button.generate:hover{ background: var(--gold); }
+  button.generate:active{ transform: scale(0.97); }
+
+  .counter{ font-family:'Space Grotesk', sans-serif; font-size: 0.75rem; color: var(--ink-text-soft); margin-left: 1rem; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--ink);
+    color: var(--ink-text-soft);
+    padding: 2.6rem clamp(1.5rem, 6vw, 4rem);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    display:flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  footer span.mark{ color: var(--coral); }
+
+  @media (prefers-reduced-motion: reduce){ *{ transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-date"><span class="dot"></span><span id="today-label">August 18 · National Couples' Day</span></div>
+    <h1 class="duo" data-text="Rana &amp; Avni">Rana &amp; Avni</h1>
+    <p class="sub">My dandelion. My favorite person to grow up with.</p>
+    <div class="counter-pill">
+      together since June 27, 2023 <strong id="daycount">—</strong> days and counting
+    </div>
+  </div>
+</section>
+
+<section id="ours">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" style="color:var(--sage)">Things only we'd know</span>
+      <h2 class="duo" data-text="A few words that are ours">A few words that are ours</h2>
+      <p>Small language, built up one day at a time.</p>
+    </div>
+    <div class="pair-grid">
+      <div class="pair-card">
+        <span class="mark">SAID QUIETLY</span>
+        <h3>Moo</h3>
+        <p>Our own way of saying I love you. Shorter, sillier, and somehow means more because it's just ours.</p>
+      </div>
+      <div class="pair-card">
+        <span class="mark">A NICKNAME THAT STUCK</span>
+        <h3>Dandelion</h3>
+        <p>Soft, a little wild, comes back every time. Still the best word I've found for you.</p>
+      </div>
+      <div class="pair-card">
+        <span class="mark">CIRCLED ON THE CALENDAR</span>
+        <h3>12.16.24</h3>
+        <p>Our forever day. The date that made the rest of them make sense.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" style="color:var(--gold)">Evidence</span>
+      <h2 class="duo" data-text="Some of my favorites">Some of my favorites</h2>
+      <p>Photo booths, sushi nights, and the mirror pics neither of us deletes.</p>
+    </div>
+    <div class="snap-grid">
+      <div class="snap"><img src="images/photobooth.jpeg" alt="Rana and Avni making faces at a table"></div>
+      <div class="snap"><img src="images/hug.jpeg" alt="Rana and Avni hugging outside"></div>
+      <div class="snap"><img src="images/mirrorkiss.jpeg" alt="Mirror selfie, forehead kiss"></div>
+      <div class="snap"><img src="images/sushi.jpeg" alt="Sushi night, cheek kiss"></div>
+    </div>
+  </div>
+</section>
+
+<section id="letter">
+  <div class="wrap letter-wrap">
+    <div class="section-head" style="margin-bottom:2rem;">
+      <span class="eyebrow" style="color:var(--coral)">For you</span>
+      <h2 class="duo" data-text="A letter">A letter</h2>
+    </div>
+    <div class="letter">
+      <p class="to">Meri Jaan,</p>
+      <p>We're strongest when we're together, and we're most grown when we have one another. There's something so special about knowing that through every season, every change, every new beginning, and every ordinary day, I get to have you by my side. I'm so grateful for you, not just for the big moments and the memories we'll always hold onto, but for all the little, everyday moments that make our life together so meaningful.</p>
+      <p>You have been such an important part of who I've become, and I'm so proud of the way we've grown together. We've learned, changed, supported each other, and made so many memories along the way. No matter what life brings, I hope we always keep choosing each other, celebrating each other's wins, being there through the hard days, and finding reasons to laugh together through it all.</p>
+      <p>We'll forever be each other's. I'm proud of us, of everything we've already been through, and of everything that's still ahead of us. As we step into this new college chapter, I couldn't be more excited to experience it together. There are so many new things to look forward to, so much we're going to learn and build, and I know there will be moments that feel completely new and unfamiliar. But having you beside me makes all of it feel a little more exciting and a lot more special.</p>
+      <p>Here's to everything we've been, everything we are, and everything we're about to become. I'm so grateful that I get to grow alongside you, make new memories with you, and continue building something that's ours. No matter how much changes around us, I hope we always remember where we started and how lucky we are to have one another.</p>
+      <p>Happy Couples' Day, my love. I'm so proud of us, and I'm so grateful for you. Today, tomorrow, and through every chapter still to come. Moo ❤️</p>
+
+      <div class="sign">with all of it — <strong>Rana</strong></div>
+    </div>
+  </div>
+</section>
+
+<section class="ask" id="ask">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" style="color:var(--gold)">One for tonight</span>
+      <h2 class="duo" data-text="Ask each other">Ask each other</h2>
+      <p>One question, out loud, no phones. You go first.</p>
+    </div>
+    <div class="bubbles">
+      <div class="bubble">
+        <p><span class="who">Question</span><span id="q1">What's a habit of mine that grew on you?</span></p>
+      </div>
+      <div class="bubble">
+        <p><span class="who">Answer it before you scroll on</span><span id="q2">If we redid our first date knowing what we know now, what would we change?</span></p>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center;">
+      <button class="generate" id="genBtn">New Questions!</button>
+      <span class="counter" id="askCount">Question 1 of 14</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Rana <span class="mark">&amp;</span> Avni</span>
+  <span>together since 6.27.2023 · happy Couples' Day</span>
+</footer>
+
+<script>
+  (function(){
+    var el = document.getElementById('today-label');
+    var d = new Date();
+    var opts = { month: 'long', day: 'numeric' };
+    var isAug18 = (d.getMonth() === 7 && d.getDate() === 18);
+    if(!isAug18){
+      el.textContent = d.toLocaleDateString('en-US', opts) + " · National Couples' Day is August 18";
+    }
+  })();
+
+  (function(){
+    var start = new Date(2023, 5, 27); // June 27, 2023
+    var now = new Date();
+    var diff = Math.floor((now - start) / (1000*60*60*24));
+    document.getElementById('daycount').textContent = diff.toLocaleString();
+  })();
+
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      document.querySelectorAll('.duo').forEach(function(el){ el.classList.add('settle'); });
+    }, 300);
+  });
+
+  var prompts = [
+    "What's something I've gotten better at, according to you?",
+    "If we redid our first date knowing what we know now, what would we change?",
+    "What's a habit of mine that grew on you?",
+    "What's one thing you want more of in an ordinary week?",
+    "What's a memory you think about more than I'd guess?",
+    "If this year had a theme song, what would it be?",
+    "What's something small I do that you've never mentioned you noticed?",
+    "What's a plan we keep talking about and never book?",
+    "What's a compliment you'd like to hear more often, even if it's true?",
+    "What's something you're proud of that has nothing to do with me?",
+    "What's one thing about 'us' you'd tell your younger self?",
+    "What's a weird tradition we've accidentally started?",
+    "What's something you'd want to try that you think I'd say no to?",
+    "What's a moment this year you wish had lasted longer?"
+  ];
+
+  var used = [0,1];
+  var count = 1;
+  var countEl = document.getElementById('askCount');
+
+  function nextIndex(){
+    var i;
+    do { i = Math.floor(Math.random() * prompts.length); }
+    while(used.includes(i) && used.length < prompts.length);
+    return i;
+  }
+
+  document.getElementById('genBtn').addEventListener('click', function(){
+    var i = nextIndex();
+    used.push(i);
+    if(used.length > prompts.length) used = [i];
+    count++;
+    if(count > prompts.length) count = 1;
+
+    var q1 = document.getElementById('q1');
+    var q2 = document.getElementById('q2');
+    q1.textContent = q2.textContent;
+    q2.textContent = prompts[i];
+    countEl.textContent = "Question " + count + " of " + prompts.length;
+  });
+</script>
+
+</body>
+</html>
